@@ -1,4 +1,4 @@
-import React from 'react';
+import { LengthConfig, StepConfig, CharTarget } from './types.ts';
 
 export const SYSTEM_PROMPT = `당신은 'Sean's WordSmith'의 편집국장입니다. 전문 기자의 문체(~했다, ~이다)를 엄격히 준수합니다.
 
@@ -8,14 +8,21 @@ export const SYSTEM_PROMPT = `당신은 'Sean's WordSmith'의 편집국장입니
 3. 학습 데이터에만 의존한 추정치를 확정적 사실처럼 기술하지 마라.
 4. 오늘 날짜를 기준으로 가장 최신의 정보를 반영하라.`;
 
-export const LENGTH_CONFIG = {
+export const LENGTH_CONFIG: Record<string, LengthConfig> = {
   BRIEF: { label: '1,000자 내외 (단신/속보)', description: '핵심 정보와 신속한 전달' },
   SHORT: { label: '2,000~3,000자 (심층 보도)', description: '핵심 쟁점과 분석 중심' },
   MEDIUM: { label: '3,000~5,000자 (기획 연재)', description: '다양한 인터뷰와 데이터 포함' },
   LONG: { label: '5,000자 이상 (대하 르포)', description: '역사적 배경부터 미래 전망까지 망라' }
 };
 
-export const STEPS_CONFIG = [
+export const LENGTH_TARGET_CHARS: Record<string, CharTarget> = {
+  BRIEF:  { min: 800,  max: 1200 },
+  SHORT:  { min: 1800, max: 3200 },
+  MEDIUM: { min: 2800, max: 5200 },
+  LONG:   { min: 4800, max: 6000 },
+};
+
+export const STEPS_CONFIG: StepConfig[] = [
   {
     type: 'TOPIC',
     name: 'Topic Smith',
@@ -53,32 +60,3 @@ export const STEPS_CONFIG = [
     prompt: '전체 기사의 논리적 흐름을 점검하고, 기자의 시각에서 가장 날카로운 문장으로 최종 다듬기를 수행하세요.'
   }
 ];
-
-export const ICONS = {
-  Logo: (props: any) => (
-    <div className={`relative flex items-center justify-center ${props.className}`}>
-      <img 
-        src="logo.png" 
-        alt="Sean's WordSmith Logo" 
-        className="block w-full h-full object-contain"
-        loading="eager"
-        style={{ minWidth: '100px', minHeight: '100px' }}
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          console.error("Logo failed to load. Attempted URL:", target.src);
-          console.warn("Check if logo.png exists in C:\\dev\\AI_Studio_Build\\seans_wordsmith and matches case-sensitively.");
-          
-          // 이미지가 안 보일 때를 대비해 텍스트 로고를 표시하도록 처리
-          target.style.display = 'none';
-          const parent = target.parentElement;
-          if (parent && !parent.querySelector('.logo-fallback')) {
-            const fallback = document.createElement('div');
-            fallback.className = 'logo-fallback text-[#FF851B] font-bold text-4xl serif-font text-center flex flex-col items-center';
-            fallback.innerHTML = `<span>Sean's</span><span class="text-[#001F3F]">WordSmith</span>`;
-            parent.appendChild(fallback);
-          }
-        }}
-      />
-    </div>
-  )
-};

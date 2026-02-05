@@ -33,3 +33,27 @@ export interface ProjectState {
   targetLength: ArticleLength;
   finalArticle: string;
 }
+
+export interface LengthConfig {
+  label: string;
+  description: string;
+}
+
+export interface StepConfig {
+  type: string;
+  name: string;
+  description: string;
+  prompt: string;
+}
+
+/** v1.1 FR-13: 글자 수 목표 범위 */
+export interface CharTarget {
+  min: number;
+  max: number;
+}
+
+/** v1.1 FR-11: Streaming 콜백 타입 */
+export type StreamCallback = (chunk: string, accumulated: string) => void;
+
+/** v1.1 FR-16: 자동저장 상태 */
+export type SaveStatus = 'saved' | 'saving' | 'idle';
