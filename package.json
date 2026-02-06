@@ -1,6 +1,10 @@
 {
   "name": "sean's-wordsmith",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shyinhyun0000/seans-wordsmith.git"
+  },
   "version": "0.0.0",
   "type": "module",
   "scripts": {
